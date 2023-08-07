@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}
+ERROR
+{% endblock %}
+{% block body %}
+</br></br>
+<center>
+	{% for i in errors %}
+		{{i}}
+	{% endfor %}
+</center>
+{% endblock %}

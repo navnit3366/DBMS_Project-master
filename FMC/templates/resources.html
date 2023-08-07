@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}
+Resources
+{% endblock %}
+{% block body %}
+</br></br>
+<center>
+	<table>
+		<tr>
+			<th>Resource ID</th>
+			<th>Name</th>
+			<th>Specifications</th>
+			<th>Cost</th>
+		</tr>
+		{% for i in resources %}
+		<tr>
+			<td>{{i.id}}</td>
+			<td>{{i.name}}</td>
+			<td>{{i.specs}}</td>
+			<td>{{i.cost}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% if request.user.is_superuser %}
+	<form id="resourceForm" action="/resources/" method="POST">
+		{% csrf_token %}
+		<label>Resource Name</label>
+			<input type="text" name="name" required>
+		<label>Specifications</label>
+			<input type="text" name="specs" required>
+		<label>Cost(in rupees)</label>
+			<input type="number" name="cost" required>
+		<input type="submit" value="add" name="add">
+	</form>
+</br></br>
+	{% endif %}
+</center>
+{% endblock %}

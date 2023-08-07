@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}
+Past Events
+{% endblock %}
+{% block body %}
+</br></br>
+<center>
+	<table>
+		<tr>
+			<th>Event ID</th>
+			<th>Name</th>
+			<th>Venue</th>
+			<th>Date-Time</th>
+			<th>Club</th>
+		</tr>
+		{% for i in pastevents %}
+		<tr>
+			<td>{{i.id}}</td>
+			<td>{{i.name}}</td>
+			<td>{{i.venue}}</td>
+			<td>{{i.time}}</td>
+			<td>{{i.club}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</center>
+{% endblock %}

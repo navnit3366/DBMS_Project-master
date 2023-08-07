@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}
+Signup
+{% endblock %}
+{% block body %}
+</br></br>
+<center>
+	<form id="signupForm" action="/signup/" method="POST">
+		{% csrf_token %}
+		<label>Username</label>
+			<input type="text" name="username" required>
+		</br>
+		<label>Name</label>
+			<input type="text" name="name" required>
+			</br>
+		<label>EmailID</label>
+			<input type="email" name="emailid" required>
+			</br>
+		<label>Password</label>
+			<input type="password" name="pwd1" required>
+			</br>
+		<label>Confirm Password</label>
+			<input type="password" name="pwd2" required>
+			</br>
+		<label>Contact</label>
+			<input type="text" name="contact" required>
+			</br>
+		<label>Branch</label>
+			<input type="text" name="branch" required>
+			</br>
+		<label>Batch</label>
+			<input type="number" name="batch" min="2000" max="2030" required>
+			</br>
+		<input type="submit" value="Signup" name="signup">
+	</form>
+</center>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}
+All Users
+{% endblock %}
+{% block body %}
+</br></br>
+<center>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Post</th>
+			<th>Club</th>
+			<th>Contact</th>
+			<th>Branch</th>
+			<th>Batch</th>
+		</tr>
+		{% for i in allusers %}
+		<tr>
+			<td>{{i.id}}</td>
+			<td>{{i.name}}</td>
+			<td>{{i.email}}</td>
+			<td>{{i.post}}</td>
+			<td>{{i.club}}</td>
+			<td>{{i.contact}}</td>
+			<td>{{i.branch}}</td>
+			<td>{{i.batch}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% if request.user.is_superuser %}
+	<form id="editForm" action="/allusers/" method="POST">
+		{% csrf_token %}
+		<label>EmailID</label>
+			<select name="email" required>
+			{% for i in allusers %}
+			<option value="{{i.email}}">{{i.email}}</option>
+			{% endfor %}
+		</select>
+		<label>Post</label>
+			<select name="post" required>
+				<option value="General Secretary">General Secretary</option>
+				<option value="Joint General Secretary">Joint General Secretary</option>
+				<option value="Secretary">Secretary</option>
+				<option value="Joint Secretary">Joint Secretary</option>
+				<option value="Member">Member</option>
+				<option value="Participant">Participant</option>
+			</select>
+		<label>Club</label>
+			<select name="club" required>
+			{% for i in clubs %}
+			<option value="{{i.id}}">{{i.name}}</option>
+			{% endfor %}
+		</select>
+		</br>
+		<input type="submit" value="edit" name="edit">
+	</form>
+	{% endif %}
+</center>
+{% endblock %}

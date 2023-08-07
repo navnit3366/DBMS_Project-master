@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}
+Funds
+{% endblock %}
+{% block body %}
+</br></br>
+<center>
+	<table>
+		<tr>
+			<th>Fund ID</th>
+			<th>Name</th>
+			<th>Contact</th>
+			<th>Amount</th>
+			<th>Organisation</th>
+		</tr>
+		{% for i in funds %}
+		<tr>
+			<td>{{i.id}}</td>
+			<td>{{i.name}}</td>
+			<td>{{i.contact}}</td>
+			<td>{{i.amount}}</td>
+			<td>{{i.organisation}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	<form id="fundsForm" method="POST" onsubmit="return false;">
+		{% csrf_token %}
+		<label>Name</label>
+			<input type="text" name="name" id="name" required>
+		<label>Contact</label>
+			<input type="text" name="contact" id="contact" required>
+		<label>Amount</label>
+			<input type="number" name="amount" id="amount" required>
+		<label>Organisation</label>
+			<input type="text" name="organisation" id="organisation" required>
+		<input type="submit" id="submitbutton" value="add" name="add">
+	</form>
+	<span class='pm-button' id='FC9D4BE58DCFBE63C46AD98B513FD8D4' hidden>
+  			<span class="state active">
+    			<input type="image" src="https://file.payumoney.com/images/payby_payumoney/new_buttons/21.png" width="131" height="37">
+  			</span>
+  			<span class="state clicked" style="display:none" >
+    			<input type="image" src="https://file.payumoney.com/images/payby_payumoney/new_buttons/submitted/21.png" width="131" height="37">
+  			</span>
+		</span>
+</br></br>
+</center>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+	$('#submitbutton').click(function(){
+		$.ajax({
+			type:"POST",
+			url:"/funds/",
+			data:{"csrfmiddlewaretoken":"{{ csrf_token }}","name":$('#name').val(),"contact":$('#contact').val(),"amount":$('#amount').val(),"organisation":$('#organisation').val(),},
+		}).done(function(request){
+			$('#FC9D4BE58DCFBE63C46AD98B513FD8D4').click();
+		}).fail(function(){
+
+		});
+	});
+	$('#FC9D4BE58DCFBE63C46AD98B513FD8D4').click(function(){
+		var amount=$('#amount').val();
+		karan(amount);
+	});
+</script>
+
+{% endblock %}

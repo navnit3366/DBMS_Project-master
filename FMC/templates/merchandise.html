@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}
+Merchandise
+{% endblock %}
+{% block body %}
+</br></br>
+<center>
+	<table>
+		<tr>
+			<th>Merchandise ID</th>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Profit</th>
+			<th>Quantity</th>
+			<th>Contact</th>
+			<th>Fund ID</th>
+			<th>Image</th>
+		</tr>
+		{% for i in merchandise %}
+		<tr>
+			<td>{{i.id}}</td>
+			<td>{{i.name}}</td>
+			<td>{{i.price}}</td>
+			<td>{{i.profit}}</td>
+			<td>{{i.quantity}}</td>
+			<td>{{i.contact}}</td>
+			<td>{{i.fundid}}</td>
+			<td><img src="data:image/png;base64,{{i.image}}" alt="Avatar" style="width:10%; height: 10%;"></td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% if request.user.is_superuser %}
+	<form id="merchandiseForm" action="/merchandise/" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<label>Name</label>
+			<input type="text" name="name" id="name" required>
+		<label>Price</label>
+			<input type="number" name="price" id="price" required>
+		<label>Profit</label>
+			<input type="number" name="profit" id="profit" required>
+		<label>Quantity</label>
+			<input type="number" name="quantity" id="quantity" required>
+		<label>Contact</label>
+			<input type="text" name="contact" id="contact" required>
+		<label>Image</label>
+			<input type="file" name="image" required>
+		<input type="submit" value="ins" name="ins">
+	</form>
+	{% endif %}
+	<form id="fundsForm" method="POST" onsubmit="return false;">
+		{% csrf_token %}
+		<label>Name</label>
+			<select name="idfund" id="idfund">
+			{% for i in leftones %}
+			<option id="funds_{{i.fundid}}" value="{{i.fundid}}" amt="{{i.price}}">{{i.name}}</option>
+			{% endfor %}</br>
+		</select>
+		<input type="submit" id="submitbutton" value="add" name="add">
+	</form>
+	<span class='pm-button' id='FC9D4BE58DCFBE63C46AD98B513FD8D4' hidden>
+  			<span class="state active">
+    			<input type="image" src="https://file.payumoney.com/images/payby_payumoney/new_buttons/21.png" width="131" height="37">
+  			</span>
+  			<span class="state clicked" style="display:none" >
+    			<input type="image" src="https://file.payumoney.com/images/payby_payumoney/new_buttons/submitted/21.png" width="131" height="37">
+  			</span>
+		</span>
+</br></br>
+</center>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+	$('#submitbutton').click(function(){
+		$.ajax({
+			type:"POST",
+			url:"/merchandise/",
+			data:{"csrfmiddlewaretoken":"{{ csrf_token }}","idfund":$('#idfund').val(),},
+		}).done(function(request){
+			$('#FC9D4BE58DCFBE63C46AD98B513FD8D4').click();
+		}).fail(function(){
+		});
+	});
+	$('#FC9D4BE58DCFBE63C46AD98B513FD8D4').click(function(){
+		var ii = $('#idfund').val();
+		var amount=$('#funds_'+ii).attr('amt');
+		alert("Moving to Payment Page");
+		karan(amount);
+	});
+</script>
+</center>
+{% endblock %}

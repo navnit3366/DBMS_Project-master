@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}
+Clubs
+{% endblock %}
+{% block body %}
+</br></br>
+<center>
+	<table>
+		<tr>
+			<th>Club ID</th>
+			<th>Name</th>
+			<th>Date</th>
+		</tr>
+		{% for i in clubs %}
+		<tr>
+			<td>{{i.id}}</td>
+			<td>{{i.name}}</td>
+			<td>{{i.date}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% if request.user.is_superuser %}
+	<form id="clubForm" action="/clubs/" method="POST">
+		{% csrf_token %}
+		<label>Club Name</label>
+			<input type="text" name="club" required>
+		<label>Establishment Date</label>
+			<input type="date" name="date" min="2000-01-01" required>
+		<input type="submit" value="add" name="add">
+	</form>
+</br></br>
+	<form id="deleteForm" action="/clubs/" method="POST">
+		{% csrf_token %}
+		<label>Club Name</label>
+			<select name="clubid">
+			{% for i in clubs %}
+			<option value="{{i.name}}">{{i.name}}</option>
+			{% endfor %}</br>
+		</select>
+		<input type="submit" value="delete" name="delete">
+	</form>
+	{% endif %}
+</center>
+{% endblock %}

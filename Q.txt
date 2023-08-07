@@ -1,0 +1,21 @@
+use fmc;
+
+create table Club(ClubID INT NOT NULL AUTO_INCREMENT, Name VARCHAR(100) NOT NULL UNIQUE, EstablishmentDate date NOT NULL, PRIMARY KEY(ClubID));
+
+insert into Club(ClubID,Name,EstablishmentDate) values(-1,"None","2000-01-01");
+
+create table Funds(FundID INT NOT NULL AUTO_INCREMENT, Name VARCHAR(100) NOT NULL, Contact VARCHAR(100) NOT NULL, Amount INT NOT NULL, Organisation VARCHAR(100) NOT NULL, PRIMARY KEY(FundID));
+
+create table Events(EventID INT NOT NULL AUTO_INCREMENT, Name VARCHAR(100) NOT NULL UNIQUE, Venue VARCHAR(100) NOT NULL, Time datetime NOT NULL, ClubID INT NOT NULL, PRIMARY KEY(EventID), FOREIGN KEY(ClubID) references Club(ClubID) ON DELETE CASCADE ON UPDATE CASCADE);
+
+create table Merchandise(MerchandiseID INT NOT NULL AUTO_INCREMENT, Name VARCHAR(100) NOT NULL, Price INT NOT NULL, Profit INT NOT NULL, Quantity INT NOT NULL, Contact VARCHAR(100) NOT NULL, FundID INT NOT NULL, PRIMARY KEY(MerchandiseID), FOREIGN KEY(FundID) references Funds(FundID) ON DELETE CASCADE ON UPDATE CASCADE);
+
+create table Resources(ResourceID INT NOT NULL AUTO_INCREMENT, Name VARCHAR(100) NOT NULL, Specifications VARCHAR(300) DEFAULT NULL, Cost INT NOT NULL, PRIMARY KEY(ResourceID));
+
+create table consists_of(ResourceID INT NOT NULL, ClubID INT NOT NULL, PRIMARY KEY(ResourceID,ClubID), FOREIGN KEY(ResourceID) references Resources(ResourceID), FOREIGN KEY(ClubID) references Club(ClubID));
+
+
+
+
+
+create table participate(id INT NOT NULL,EventID INT NOT NULL,PRIMARY KEY(id,EventID),FOREIGN KEY(id) references auth_user(id),FOREIGN KEY(EventID) references Event(EventID));

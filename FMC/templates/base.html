@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src= "https://www.payumoney.com/Api/REST/op/buttonScript" async="true" > </script>
+	<script>
+		function karan(amount)
+		{
+			window.PUM.setData(amount,"1","Nice");
+			window.PUM.pay();
+		};
+	</script>
+	<title>{% block title %}
+	{% endblock %}</title>
+</head>	
+<body bgcolor="#EEE">
+
+	{% load static %}
+	<img src="{% static 'images/FMC' %}" alt="FMC" height=10% width=10% align=left>
+	<img src="{% static 'images/IIT' %}" alt="IIT" height=10% width=10% align=right>	
+	<h1><center>Film and Media Council</center></h1>
+	<h2><center>IIT (BHU) Varanasi</center></h2>
+	<center>
+		<a href="/home">Home</a>
+		<a href="/clubs">Clubs</a>
+		<a href="/people">People</a>
+		<a href="/events">Events</a>
+		<a href="/support">Support</a>
+		{% if request.user.is_authenticated %}
+		<a href="/logout">Logout</a>
+		{% else %}
+		<a href="/login">Login</a>
+		{% endif %}
+		{% if not request.user.is_active %}
+		<a href="/signup">Signup</a>
+		{% endif %}
+		{% if request.user.is_superuser %}
+		<a href="/allusers">All Users</a>
+		{% endif %}
+	</center>
+</br></br>
+</br></br>
+	<center><img src="{% static 'images/home' %}" alt="home" height=45% width=55%></center>
+</br>
+{% block body %}
+
+{% endblock %}
+	
+</body>
+</html>
